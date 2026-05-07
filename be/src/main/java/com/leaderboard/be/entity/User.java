@@ -19,7 +19,7 @@ public class User extends BaseEntity {
     @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
 
     @Column(name = "phone", unique = true)
