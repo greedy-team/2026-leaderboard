@@ -4,6 +4,7 @@ import com.leaderboard.be.dto.ScoreSubmitRequest;
 import com.leaderboard.be.dto.ScoreSubmitResponse;
 import com.leaderboard.be.dto.ScoreUpdateResponse;
 import com.leaderboard.be.entity.Game;
+import com.leaderboard.be.entity.GameType;
 import com.leaderboard.be.entity.Score;
 import com.leaderboard.be.entity.User;
 import com.leaderboard.be.repository.GameRepository;
@@ -30,7 +31,8 @@ public class GameScoreService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 ID입니다: " + request.userId()));
 
         // 게임 찾기
-        Game game = gameRepository.findByGameType_GameName(request.gameName())
+        GameType gameType = GameType.from(request.gameName());
+        Game game = gameRepository.findByGameType(gameType)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 이름입니다: " + request.gameName()));
 
         // 2. 기존 점수 기록 조회
@@ -72,7 +74,8 @@ public class GameScoreService {
 
     //점수 강제 수정
     public ScoreUpdateResponse forceUpdateScore(ScoreSubmitRequest request) {
-        Game game = gameRepository.findByGameType_GameName(request.gameName())
+        GameType gameType = GameType.from(request.gameName());
+        Game game = gameRepository.findByGameType(gameType)
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
 
         Score score = scoreRepository.findByUser_UserIdAndGame_GameId(request.userId(), game.getGameId())
