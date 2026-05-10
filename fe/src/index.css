@@ -1,0 +1,316 @@
+@import url("https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: "Galmuri11", "Galmuri14", system-ui, sans-serif;
+    color: #ffffff;
+    background: #030307;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #030307;
+}
+
+body {
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.retro-screen {
+    width: 100vw;
+    height: 100vh;
+    padding: 20px 56px 24px;
+    background: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 10%, rgba(45, 226, 230, 0.13), transparent 34%),
+    radial-gradient(circle at 18% 88%, rgba(255, 45, 117, 0.13), transparent 32%),
+    #030307;
+    background-size: 32px 32px, 32px 32px, auto, auto;
+    position: relative;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.retro-screen::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.035) 0,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px,
+            transparent 4px
+    );
+    mix-blend-mode: screen;
+    opacity: 0.28;
+    z-index: 20;
+}
+
+.retro-screen::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 70px rgba(0, 0, 0, 0.95);
+    z-index: 21;
+}
+
+.retro-content {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 300px 1fr;
+    row-gap: 26px;
+    position: relative;
+    z-index: 1;
+}
+
+.retro-title {
+    color: #fff45c;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-shadow: 3px 3px 0 #ff2d75,
+    6px 6px 0 #2de2e6,
+    0 0 16px rgba(255, 244, 92, 0.9);
+}
+
+.retro-panel {
+    background: rgba(3, 3, 7, 0.95);
+    border: 4px solid #ffffff;
+    box-shadow: 0 0 0 4px #ff2d75,
+    0 0 24px rgba(255, 45, 117, 0.8),
+    inset 0 0 24px rgba(45, 226, 230, 0.12);
+    overflow: hidden;
+}
+
+.retro-card {
+    background: rgba(3, 3, 7, 0.96);
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 3px #2de2e6,
+    0 0 22px rgba(45, 226, 230, 0.82),
+    inset 0 0 18px rgba(255, 45, 117, 0.12);
+    overflow: hidden;
+}
+
+.retro-card:nth-child(odd) {
+    box-shadow: 0 0 0 3px #ff2d75,
+    0 0 22px rgba(255, 45, 117, 0.78),
+    inset 0 0 18px rgba(45, 226, 230, 0.12);
+}
+
+.rank-1 {
+    color: #fff45c;
+    text-shadow: 0 0 12px rgba(255, 244, 92, 0.95);
+}
+
+.rank-2 {
+    color: #2de2e6;
+    text-shadow: 0 0 12px rgba(45, 226, 230, 0.95);
+}
+
+.rank-3 {
+    color: #ff2d75;
+    text-shadow: 0 0 12px rgba(255, 45, 117, 0.95);
+}
+
+.rank-normal {
+    color: #ffffff;
+}
+
+.score-neon {
+    color: #7cff6b;
+    text-shadow: 0 0 12px rgba(124, 255, 107, 0.95);
+}
+
+/* 상단 종합 순위 */
+.overall-row {
+    display: grid;
+    grid-template-columns: 90px 520px 1fr;
+    align-items: center;
+    column-gap: 22px;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.22);
+}
+
+.overall-row:last-child {
+    border-bottom: none;
+}
+
+.overall-rank {
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.overall-name {
+    font-weight: 900;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 520px;
+}
+
+.overall-score {
+    font-weight: 900;
+    line-height: 1;
+    text-align: right;
+    justify-self: end;
+    min-width: 150px;
+}
+
+/* 하단 미니게임 순위 */
+.game-row {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 82px;
+    align-items: center;
+    column-gap: 8px;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.game-row:last-child {
+    border-bottom: none;
+}
+
+.game-rank {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.game-name {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-score {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: right;
+}
+
+.retro-empty {
+    color: #ff2d75;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 36px;
+    text-shadow: 0 0 12px rgba(255, 45, 117, 0.8);
+}
+
+/* 순위별 크기 차등 적용 - 안정형 */
+.overall-size-1 .overall-rank,
+.overall-size-1 .overall-name,
+.overall-size-1 .overall-score {
+    font-size: 29px;
+}
+
+.overall-size-2 .overall-rank,
+.overall-size-2 .overall-name,
+.overall-size-2 .overall-score {
+    font-size: 27px;
+}
+
+.overall-size-3 .overall-rank,
+.overall-size-3 .overall-name,
+.overall-size-3 .overall-score {
+    font-size: 25px;
+}
+
+.overall-size-4 .overall-rank,
+.overall-size-4 .overall-name,
+.overall-size-4 .overall-score,
+.overall-size-5 .overall-rank,
+.overall-size-5 .overall-name,
+.overall-size-5 .overall-score {
+    font-size: 22px;
+}
+
+.overall-size-1,
+.overall-size-2,
+.overall-size-3,
+.overall-size-4,
+.overall-size-5 {
+    height: 39px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.game-size-1 .game-rank,
+.game-size-1 .game-name,
+.game-size-1 .game-score {
+    font-size: 20px;
+}
+
+.game-size-2 .game-rank,
+.game-size-2 .game-name,
+.game-size-2 .game-score {
+    font-size: 19px;
+}
+
+.game-size-3 .game-rank,
+.game-size-3 .game-name,
+.game-size-3 .game-score {
+    font-size: 18px;
+}
+
+.game-size-4 .game-rank,
+.game-size-4 .game-name,
+.game-size-4 .game-score,
+.game-size-5 .game-rank,
+.game-size-5 .game-name,
+.game-size-5 .game-score {
+    font-size: 16px;
+}
+
+.game-size-1,
+.game-size-2,
+.game-size-3,
+.game-size-4,
+.game-size-5 {
+    height: 34px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* 긴 이름 안정 처리 */
+.overall-name,
+.game-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 점수 칸은 고정 */
+.overall-score,
+.game-score {
+    white-space: nowrap;
+}
+
+/* TOTAL 박스 안에서 절대 넘치지 않게 */
+.retro-panel {
+    overflow: hidden;
+}
+
+/* MINI 카드 안에서도 절대 넘치지 않게 */
+.retro-card {
+    overflow: hidden;
+}

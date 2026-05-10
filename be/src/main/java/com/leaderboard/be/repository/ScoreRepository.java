@@ -2,14 +2,15 @@ package com.leaderboard.be.repository;
 
 import com.leaderboard.be.entity.Score;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
-import java.util.Optional;
+
 
 public interface ScoreRepository extends JpaRepository<Score, Long> {
     Optional<Score> findByUser_UserId(String userId);
+    Optional<Score> findByUser_UserIdAndGame_GameId(String userId, Long gameId);
 
     @Query("SELECT s.user.userId AS userId, s.user.nickname AS nickname, SUM(s.playCount) AS totalPlayCount " +
             "FROM Score s GROUP BY s.user.userId, s.user.nickname")
