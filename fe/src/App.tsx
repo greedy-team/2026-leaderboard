@@ -2,9 +2,9 @@ import { LeaderboardPage } from "./components/LeaderboardPage";
 import { SignupPage } from "./components/SignupPage";
 
 function App() {
-  const path = window.location.pathname;
+  const hash = window.location.hash;
 
-  if (path.includes("/signup")) {
+  if (hash === "#/signup") {
     return <SignupPage />;
   }
 
