@@ -12,42 +12,6 @@ const getRankColorClass = (rank: number) => {
     return "rank-normal";
 };
 
-const getOverallSizeClass = (rank: number) => {
-    if (rank === 1) {
-        return {
-            rank: "text-[32px]",
-            name: "text-[33px]",
-            score: "text-[33px]",
-            row: "py-[7px]",
-        };
-    }
-
-    if (rank === 2) {
-        return {
-            rank: "text-[29px]",
-            name: "text-[30px]",
-            score: "text-[30px]",
-            row: "py-[6px]",
-        };
-    }
-
-    if (rank === 3) {
-        return {
-            rank: "text-[27px]",
-            name: "text-[28px]",
-            score: "text-[28px]",
-            row: "py-[5px]",
-        };
-    }
-
-    return {
-        rank: "text-[23px]",
-        name: "text-[24px]",
-        score: "text-[24px]",
-        row: "py-[4px]",
-    };
-};
-
 export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
                                                                           players,
                                                                       }) => {

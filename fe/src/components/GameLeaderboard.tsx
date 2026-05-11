@@ -13,42 +13,6 @@ const getRankColorClass = (rank: number) => {
     return "rank-normal";
 };
 
-const getGameSizeClass = (rank: number) => {
-    if (rank === 1) {
-        return {
-            rank: "text-[22px]",
-            name: "text-[22px]",
-            score: "text-[22px]",
-            row: "py-[7px]",
-        };
-    }
-
-    if (rank === 2) {
-        return {
-            rank: "text-[20px]",
-            name: "text-[20px]",
-            score: "text-[20px]",
-            row: "py-[6px]",
-        };
-    }
-
-    if (rank === 3) {
-        return {
-            rank: "text-[19px]",
-            name: "text-[19px]",
-            score: "text-[19px]",
-            row: "py-[5px]",
-        };
-    }
-
-    return {
-        rank: "text-[17px]",
-        name: "text-[17px]",
-        score: "text-[17px]",
-        row: "py-[4px]",
-    };
-};
-
 export const GameLeaderboard: React.FC<GameLeaderboardProps> = ({
                                                                     gameScores,
                                                                     titles,
