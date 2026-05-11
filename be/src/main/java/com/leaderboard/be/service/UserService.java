@@ -45,6 +45,9 @@ public class UserService {
     }
 
     public UserProfileResponse getUserByPhone(String phone) {
+        if (phone == null || !phone.matches("^\\d{8}$")) {
+            throw new IllegalArgumentException("전화번호는 8자리 숫자여야 합니다.");
+        }
         User user = userRepository.findByPhone(phone)
                 .orElseThrow(() -> new IllegalArgumentException("해당 전화번호로 등록된 유저가 없습니다."));
 
