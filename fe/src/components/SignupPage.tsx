@@ -16,6 +16,13 @@ export const SignupPage: React.FC = () => {
     const [userId, setUserId] = useState("");
     const [displayNickname, setDisplayNickname] = useState("");
 
+    const resetSignupForm = () => {
+        setPhone("");
+        setNickname("");
+        setIsNewUser(false);
+        setMessage("");
+    };
+
     const saveUserToLocalStorage = (user: UserResponse) => {
         localStorage.setItem("userId", user.userId);
         localStorage.setItem("nickname", user.nickname);
@@ -40,16 +47,40 @@ export const SignupPage: React.FC = () => {
 
         try {
             const response = await axios.get<UserResponse>(
-                `${apiURL}/users/phone?phone=${phone}`
+                `${apiURL}/users/phone?phone=${encodeURIComponent(phone)}`
             );
 
             saveUserToLocalStorage(response.data);
             setUserId(response.data.userId);
             setDisplayNickname(response.data.nickname);
             setMessage("기존 유저입니다.");
-        } catch (error) {
-            setIsNewUser(true);
-            setMessage("신규 유저입니다. 닉네임을 입력해주세요.");
+
+            setTimeout(() => {
+                resetSignupForm();
+            }, 1000);
+        } catch (error: any) {
+            const status = error.response?.status;
+            const data = error.response?.data;
+            const msg = data?.message ?? "";
+
+            if (
+                status === 404 ||
+                msg.includes("등록된 유저가 없습니다") ||
+                msg.includes("해당 전화번호")
+            ) {
+                setIsNewUser(true);
+                setMessage("신규 유저입니다. 닉네임을 입력해주세요.");
+                return;
+            }
+
+            if (!error.response) {
+                setMessage(
+                    "백엔드 서버에서 응답이 없습니다. API 주소 또는 CORS 설정을 확인해주세요."
+                );
+                return;
+            }
+
+            setMessage(msg || "전화번호 확인 중 오류가 발생했습니다.");
         }
     };
 
@@ -71,7 +102,18 @@ export const SignupPage: React.FC = () => {
             setUserId(response.data.userId);
             setDisplayNickname(response.data.nickname);
             setMessage("회원가입이 완료되었습니다.");
+
+            setTimeout(() => {
+                resetSignupForm();
+            }, 1000);
         } catch (error: any) {
+            if (!error.response) {
+                setMessage(
+                    "회원가입에 실패했습니다. 백엔드 서버에서 응답이 없습니다. API 주소 또는 CORS 설정을 확인해주세요."
+                );
+                return;
+            }
+
             const data = error.response?.data;
             const msg = data?.message ?? "오류가 발생했습니다.";
             setMessage(msg);
@@ -201,20 +243,29 @@ export const SignupPage: React.FC = () => {
                     <div style={{ marginTop: 24 }}>
                         <div style={{ marginBottom: 16 }}>
                             <p style={{ ...labelStyle, marginBottom: 8 }}>닉네임</p>
-                            <p style={{
-                                fontSize: 24,
-                                fontWeight: 700,
-                                color: "#ffffff",
-                            }}>{displayNickname}</p>
+                            <p
+                                style={{
+                                    fontSize: 24,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                }}
+                            >
+                                {displayNickname}
+                            </p>
                         </div>
+
                         <div>
                             <p style={{ ...labelStyle, marginBottom: 8 }}>아이디</p>
-                            <p style={{
-                                fontSize: 32,
-                                fontWeight: 700,
-                                color: "#ffffff",
-                                letterSpacing: 4,
-                            }}>{userId}</p>
+                            <p
+                                style={{
+                                    fontSize: 32,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                    letterSpacing: 4,
+                                }}
+                            >
+                                {userId}
+                            </p>
                         </div>
                     </div>
                 )}
