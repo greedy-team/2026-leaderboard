@@ -14,6 +14,7 @@ export const SignupPage: React.FC = () => {
     const [isNewUser, setIsNewUser] = useState(false);
     const [message, setMessage] = useState("");
     const [userId, setUserId] = useState("");
+    const [displayNickname, setDisplayNickname] = useState("");
 
     const saveUserToLocalStorage = (user: UserResponse) => {
         localStorage.setItem("userId", user.userId);
@@ -23,6 +24,10 @@ export const SignupPage: React.FC = () => {
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
         setPhone(onlyNumbers);
+        setUserId("");
+        setDisplayNickname("");
+        setMessage("");
+        setIsNewUser(false);
     };
 
     const handleCheckPhone = async (e: React.FormEvent) => {
@@ -40,6 +45,7 @@ export const SignupPage: React.FC = () => {
 
             saveUserToLocalStorage(response.data);
             setUserId(response.data.userId);
+            setDisplayNickname(response.data.nickname);
             setMessage("기존 유저입니다.");
         } catch (error) {
             setIsNewUser(true);
@@ -63,6 +69,7 @@ export const SignupPage: React.FC = () => {
 
             saveUserToLocalStorage(response.data);
             setUserId(response.data.userId);
+            setDisplayNickname(response.data.nickname);
             setMessage("회원가입이 완료되었습니다.");
         } catch (error: any) {
             const data = error.response?.data;
@@ -144,7 +151,7 @@ export const SignupPage: React.FC = () => {
     return (
         <div style={pageStyle}>
             <div style={containerStyle}>
-                <h1 style={titleStyle}>운영진 회원가입</h1>
+                <h1 style={titleStyle}>회원가입</h1>
 
                 {!isNewUser ? (
                     <form onSubmit={handleCheckPhone}>
@@ -192,13 +199,23 @@ export const SignupPage: React.FC = () => {
 
                 {userId && (
                     <div style={{ marginTop: 24 }}>
-                        <p style={{ ...labelStyle, marginBottom: 8 }}>아이디</p>
-                        <p style={{
-                            fontSize: 32,
-                            fontWeight: 700,
-                            color: "#ffffff",
-                            letterSpacing: 4,
-                        }}>{userId}</p>
+                        <div style={{ marginBottom: 16 }}>
+                            <p style={{ ...labelStyle, marginBottom: 8 }}>닉네임</p>
+                            <p style={{
+                                fontSize: 24,
+                                fontWeight: 700,
+                                color: "#ffffff",
+                            }}>{displayNickname}</p>
+                        </div>
+                        <div>
+                            <p style={{ ...labelStyle, marginBottom: 8 }}>아이디</p>
+                            <p style={{
+                                fontSize: 32,
+                                fontWeight: 700,
+                                color: "#ffffff",
+                                letterSpacing: 4,
+                            }}>{userId}</p>
+                        </div>
                     </div>
                 )}
             </div>
