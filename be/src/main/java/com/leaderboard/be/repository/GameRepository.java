@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<Game> findByGameType(GameType gameType);
+    boolean existsByGameType(GameType gameType);
 }
