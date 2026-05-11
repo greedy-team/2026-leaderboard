@@ -1,5 +1,6 @@
 package com.leaderboard.be.controller;
 
+import com.leaderboard.be.controller.docs.UserControllerDocs;
 import com.leaderboard.be.dto.UserInfoResponse;
 import com.leaderboard.be.dto.UserProfileRequest;
 import com.leaderboard.be.dto.UserProfileResponse;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Validated
-public class UserController {
+public class UserController implements UserControllerDocs {
 
     private final UserService userService;
 
