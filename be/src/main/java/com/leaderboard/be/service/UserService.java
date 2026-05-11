@@ -19,11 +19,16 @@ public class UserService {
 
     @Transactional
     public UserProfileResponse createUser(UserProfileRequest request) {
+        if (request.phone() != null) {
+            java.util.Optional<User> existingByPhone = userRepository.findByPhone(request.phone());
+            if (existingByPhone.isPresent()) {
+                User existing = existingByPhone.get();
+                return new UserProfileResponse(existing.getUserId(), existing.getNickname(), existing.getPhone());
+            }
+        }
+
         if (userRepository.existsByNickname(request.nickname())) {
             throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
-        }
-        if (request.phone() != null && userRepository.existsByPhone(request.phone())) {
-            throw new IllegalArgumentException("이미 사용 중인 전화번호입니다.");
         }
 
         String userId = generateUserId();

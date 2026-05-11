@@ -13,10 +13,7 @@ export const SignupPage: React.FC = () => {
     const [nickname, setNickname] = useState("");
     const [isNewUser, setIsNewUser] = useState(false);
     const [message, setMessage] = useState("");
-
-    const goToLeaderboard = () => {
-        window.location.href = import.meta.env.BASE_URL;
-    };
+    const [userId, setUserId] = useState("");
 
     const saveUserToLocalStorage = (user: UserResponse) => {
         localStorage.setItem("userId", user.userId);
@@ -42,10 +39,9 @@ export const SignupPage: React.FC = () => {
             );
 
             saveUserToLocalStorage(response.data);
-            setMessage("기존 유저입니다. 랭킹 페이지로 이동합니다.");
-            goToLeaderboard();
+            setUserId(response.data.userId);
+            setMessage("기존 유저입니다.");
         } catch (error) {
-            console.error(error);
             setIsNewUser(true);
             setMessage("신규 유저입니다. 닉네임을 입력해주세요.");
         }
@@ -66,19 +62,12 @@ export const SignupPage: React.FC = () => {
             });
 
             saveUserToLocalStorage(response.data);
-            setMessage("회원가입이 완료되었습니다. 랭킹 페이지로 이동합니다.");
-            goToLeaderboard();
+            setUserId(response.data.userId);
+            setMessage("회원가입이 완료되었습니다.");
         } catch (error: any) {
-            console.error(error);
-
-            const status = error.response?.status;
             const data = error.response?.data;
-
-            setMessage(
-                `회원가입에 실패했습니다. status: ${status ?? "알 수 없음"}, message: ${
-                    data ? JSON.stringify(data) : "응답 없음"
-                }`
-            );
+            const msg = data?.message ?? "오류가 발생했습니다.";
+            setMessage(msg);
         }
     };
 
@@ -200,6 +189,18 @@ export const SignupPage: React.FC = () => {
                 )}
 
                 {message && <p style={messageStyle}>{message}</p>}
+
+                {userId && (
+                    <div style={{ marginTop: 24 }}>
+                        <p style={{ ...labelStyle, marginBottom: 8 }}>아이디</p>
+                        <p style={{
+                            fontSize: 32,
+                            fontWeight: 700,
+                            color: "#ffffff",
+                            letterSpacing: 4,
+                        }}>{userId}</p>
+                    </div>
+                )}
             </div>
         </div>
     );
