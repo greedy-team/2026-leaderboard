@@ -5,7 +5,10 @@ import com.leaderboard.be.dto.UserProfileRequest;
 import com.leaderboard.be.dto.UserProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "User", description = "유저 관련 API")
 public interface UserControllerDocs {
@@ -17,5 +20,8 @@ public interface UserControllerDocs {
     ResponseEntity<UserInfoResponse> getUserById(String userId);
 
     @Operation(summary = "유저 조회 (전화번호)", description = "전화번호 뒷 8자리로 유저 정보를 조회합니다.")
-    ResponseEntity<UserProfileResponse> getUserByPhone(String phone);
+    ResponseEntity<UserProfileResponse> getUserByPhone(
+            @RequestParam @NotBlank
+            @Pattern(regexp = "^\\d{8}$", message = "전화번호는 8자리 숫자여야 합니다.")
+            String phone);
 }
