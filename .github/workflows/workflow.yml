@@ -23,6 +23,10 @@ jobs:
         working-directory: ./be
         run: chmod +x gradlew
 
+      - name: Check jar contents
+        working-directory: ./be
+        run: jar tf build/libs/*.jar | grep controller
+
       - name: Build with Gradle
         working-directory: ./be
         run: ./gradlew clean bootJar
