@@ -1,5 +1,6 @@
 package com.leaderboard.be.controller;
 
+import com.leaderboard.be.controller.docs.LeaderboardControllerDocs;
 import com.leaderboard.be.dto.GameRankingResponse;
 import com.leaderboard.be.dto.LeaderboardResponse;
 import com.leaderboard.be.service.LeaderboardService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/leader-board")
 @RequiredArgsConstructor
-public class LeaderboardController {
+public class LeaderboardController implements LeaderboardControllerDocs {
 
     private final LeaderboardService leaderboardService;
 

@@ -1,5 +1,6 @@
 package com.leaderboard.be.controller;
 
+import com.leaderboard.be.controller.docs.GameScoreControllerDocs;
 import com.leaderboard.be.dto.*;
 import com.leaderboard.be.service.GameScoreService;
 import jakarta.validation.Valid;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class GameScoreController {
+public class GameScoreController implements GameScoreControllerDocs {
 
     private final GameScoreService gameScoreService;
     //service 호출해서 처리 맡김
