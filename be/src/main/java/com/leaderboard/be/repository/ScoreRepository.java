@@ -17,7 +17,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<PlayCountInterface> countParticipationPerUser();
 
     @Query(value = "WITH ranked AS ( " +
-            "SELECT u.user_id, u.nickname, s.best_score as score, RANK() OVER (ORDER BY s.best_score DESC) AS `rank` " +
+            "SELECT u.user_id, u.nickname, s.best_score as score, RANK() OVER (ORDER BY s.best_score DESC, s.play_count DESC) AS `rank` " +
             "FROM score s " +
             "JOIN users u ON s.user_id = u.user_id " +
             "JOIN game g ON s.game_id = g.game_id " +
@@ -27,7 +27,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<RankInterface> findTop5WithRankByHighScore(@Param("gameType") String gameType);
 
     @Query(value = "WITH ranked AS ( " +
-            "SELECT u.user_id, u.nickname, s.best_score as score, RANK() OVER (ORDER BY s.best_score ASC) AS `rank` " +
+            "SELECT u.user_id, u.nickname, s.best_score as score, RANK() OVER (ORDER BY s.best_score ASC, s.play_count DESC) AS `rank` " +
             "FROM score s " +
             "JOIN users u ON s.user_id = u.user_id " +
             "JOIN game g ON s.game_id = g.game_id " +
