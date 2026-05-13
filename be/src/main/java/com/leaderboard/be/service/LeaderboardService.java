@@ -42,7 +42,7 @@ public class LeaderboardService {
                 .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
                 .toList();
 
-        return new GameRankingResponse(gameType.getGameNameKR(), rankings);
+        return new GameRankingResponse(gameType.getGameNameKR(), gameType.getUnit(), rankings);
     }
 
     public LeaderboardResponse getOverallRanking() {
