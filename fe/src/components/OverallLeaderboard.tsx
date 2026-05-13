@@ -1,8 +1,8 @@
 import React from "react";
-import type { Player } from "../types/leaderboard";
+import type { LeaderboardResponse } from "../types/leaderboard";
 
 interface OverallLeaderboardProps {
-    players: Player[];
+    leaderboard: LeaderboardResponse;
 }
 
 const getRankColorClass = (rank: number) => {
@@ -13,15 +13,14 @@ const getRankColorClass = (rank: number) => {
 };
 
 export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
-                                                                          players,
-                                                                      }) => {
-    const topPlayers = players.slice(0, 5);
+    leaderboard,
+}) => {
+    const topRankings = leaderboard.rankings.slice(0, 5);
 
     return (
         <section className="h-full flex flex-col max-w-[1080px] mx-auto w-full">
             <h1 className="retro-title text-[60px] leading-none mb-4 flex items-center justify-center gap-4">
-                <span>🏆</span>
-                <span>TOTAL LEADERBOARD</span>
+                <span>{leaderboard.gameName}</span>
             </h1>
 
             <div className="retro-panel rounded-[10px] px-14 py-8 flex-1 min-h-[400px]">
@@ -31,26 +30,30 @@ export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
                     <div className="text-right">SCORE</div>
                 </div>
 
-                {topPlayers.length === 0 ? (
+                {topRankings.length === 0 ? (
                     <div className="retro-empty">NO DATA</div>
                 ) : (
                     <div>
-                        {topPlayers.map((player, index) => {
-                            const rank = index + 1;
-                            const colorClass = getRankColorClass(rank);
+                        {topRankings.map((ranking, index) => {
+                            const colorClass = getRankColorClass(ranking.rank);
+                            const displaySize = index + 1;
 
                             return (
-                                <div className={`overall-row overall-size-${rank}`} key={`${player.name}-${index}`}>
+                                <div
+                                    className={`overall-row overall-size-${displaySize}`}
+                                    key={`${ranking.rank}-${ranking.nickname}-${index}`}
+                                >
                                     <div className={`overall-rank ${colorClass}`}>
-                                        {String(rank).padStart(2, "0")}
+                                        {String(ranking.rank).padStart(2, "0")}
                                     </div>
 
                                     <div className={`overall-name ${colorClass}`}>
-                                        {player.name}
+                                        {ranking.nickname}
                                     </div>
 
                                     <div className="overall-score score-neon">
-                                        {player.score}점
+                                        {ranking.score}
+                                        {leaderboard.unit}
                                     </div>
                                 </div>
                             );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import type { AxiosError } from "axios";
 import { apiURL } from "./api/api";
 
 type UserResponse = {
@@ -7,6 +8,12 @@ type UserResponse = {
     nickname: string;
     phone: string;
 };
+
+type ErrorResponse = {
+    message?: string;
+};
+
+const toAxiosError = (error: unknown) => error as AxiosError<ErrorResponse>;
 
 export const SignupPage: React.FC = () => {
     const [phone, setPhone] = useState("");
@@ -58,9 +65,10 @@ export const SignupPage: React.FC = () => {
             setTimeout(() => {
                 resetSignupForm();
             }, 1000);
-        } catch (error: any) {
-            const status = error.response?.status;
-            const data = error.response?.data;
+        } catch (error: unknown) {
+            const axiosError = toAxiosError(error);
+            const status = axiosError.response?.status;
+            const data = axiosError.response?.data;
             const msg = data?.message ?? "";
 
             if (
@@ -73,7 +81,7 @@ export const SignupPage: React.FC = () => {
                 return;
             }
 
-            if (!error.response) {
+            if (!axiosError.response) {
                 setMessage(
                     "백엔드 서버에서 응답이 없습니다. API 주소 또는 CORS 설정을 확인해주세요."
                 );
@@ -106,15 +114,17 @@ export const SignupPage: React.FC = () => {
             setTimeout(() => {
                 resetSignupForm();
             }, 1000);
-        } catch (error: any) {
-            if (!error.response) {
+        } catch (error: unknown) {
+            const axiosError = toAxiosError(error);
+
+            if (!axiosError.response) {
                 setMessage(
                     "회원가입에 실패했습니다. 백엔드 서버에서 응답이 없습니다. API 주소 또는 CORS 설정을 확인해주세요."
                 );
                 return;
             }
 
-            const data = error.response?.data;
+            const data = axiosError.response?.data;
             const msg = data?.message ?? "오류가 발생했습니다.";
             setMessage(msg);
         }
