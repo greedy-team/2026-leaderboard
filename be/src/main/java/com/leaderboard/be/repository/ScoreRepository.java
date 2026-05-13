@@ -12,7 +12,7 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     Optional<Score> findByUser_UserId(String userId);
     Optional<Score> findByUser_UserIdAndGame_GameId(String userId, Long gameId);
 
-    @Query("SELECT s.user.userId AS userId, s.user.nickname AS nickname, SUM(s.playCount) AS totalPlayCount " +
+    @Query("SELECT s.user.userId AS userId, s.user.nickname AS nickname, COUNT(s.game) AS playedGameCount, SUM(s.playCount) AS totalPlayCount " +
             "FROM Score s GROUP BY s.user.userId, s.user.nickname")
     List<PlayCountInterface> countParticipationPerUser();
 

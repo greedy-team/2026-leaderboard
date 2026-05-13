@@ -52,7 +52,7 @@ public class LeaderboardService {
 
         participations.forEach(p -> {
             String userId = p.getUserId();
-            scoreMap.merge(userId, 3, Integer::sum);
+            scoreMap.merge(userId, p.getPlayedGameCount() * 3, Integer::sum);
             playCountMap.put(userId, p.getTotalPlayCount());
             nicknameMap.put(userId, p.getNickname());
         });
