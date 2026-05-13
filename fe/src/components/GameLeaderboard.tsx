@@ -19,20 +19,20 @@ export const GameLeaderboard: React.FC<GameLeaderboardProps> = ({
                                                                 }) => {
     return (
         <section className="h-full min-h-0 flex flex-col">
-            <h2 className="retro-title text-[34px] leading-none mb-5">
+            <h2 className="retro-title text-[40px] leading-none mb-5">
                 🎮 MINI GAME RANKING
             </h2>
 
-            <div className="grid grid-cols-4 gap-8 flex-1 min-h-0">
+            <div className="grid grid-cols-4 gap-8">
                 {titles.map((title) => {
                     const scores = gameScores[title] ?? [];
 
                     return (
                         <article
                             key={title}
-                            className="retro-card rounded-[10px] px-5 py-4 h-full min-h-0"
+                            className="retro-card rounded-[10px] px-5 py-4 min-h-[340px]"
                         >
-                            <h3 className="text-center text-[22px] leading-[1.15] font-black text-[#fff45c] mb-3 h-[48px] flex items-center justify-center">
+                            <h3 className="text-center text-[30px] leading-[1.15] font-black text-[#fff8dc] mb-3 h-[48px] flex items-center justify-center drop-shadow-[0_0_10px_rgba(255,248,220,0.7)]">
                                 {title}
                             </h3>
 

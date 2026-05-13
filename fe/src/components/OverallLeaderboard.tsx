@@ -19,12 +19,12 @@ export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
 
     return (
         <section className="h-full flex flex-col max-w-[1080px] mx-auto w-full">
-            <h1 className="retro-title text-[40px] leading-none mb-4 flex items-center justify-center gap-4">
+            <h1 className="retro-title text-[60px] leading-none mb-4 flex items-center justify-center gap-4">
                 <span>🏆</span>
                 <span>TOTAL LEADERBOARD</span>
             </h1>
 
-            <div className="retro-panel rounded-[10px] px-10 py-4 flex-1 min-h-0">
+            <div className="retro-panel rounded-[10px] px-14 py-8 flex-1 min-h-[400px]">
                 <div className="grid grid-cols-[90px_520px_1fr] gap-[22px] mb-1 text-[16px] font-black text-[#ff2d75]">
                     <div>RANK</div>
                     <div>PLAYER</div>
