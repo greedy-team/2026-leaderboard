@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
@@ -25,7 +25,11 @@ jobs:
 
       - name: Build with Gradle
         working-directory: ./be
-        run: ./gradlew bootJar
+        run: ./gradlew clean bootJar
+
+      - name: Check jar contents
+        working-directory: ./be
+        run: jar tf build/libs/*.jar | grep controller
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

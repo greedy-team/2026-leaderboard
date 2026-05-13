@@ -22,6 +22,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class LeaderboardService {
+    private static final int TOP_RANK_LIMIT = 5;
+    private static final int BASE_SCORE_PER_GAME = 3;
 
     private final ScoreRepository scoreRepository;
 
@@ -31,9 +33,9 @@ public class LeaderboardService {
         List<RankInterface> rankInterfaces;
 
         if (!gameType.isLowBetter()) {
-            rankInterfaces = scoreRepository.findTop5WithRankByHighScore(gameType.name());
+            rankInterfaces = scoreRepository.findTopNWithRankByHighScore(gameType.name(), TOP_RANK_LIMIT);
         } else {
-            rankInterfaces = scoreRepository.findTop5WithRankByLowScore(gameType.name());
+            rankInterfaces = scoreRepository.findTopNWithRankByLowScore(gameType.name(), TOP_RANK_LIMIT);
         }
 
         List<GameRankingResponse.Ranking> rankings = rankInterfaces.stream()
@@ -52,7 +54,7 @@ public class LeaderboardService {
 
         participations.forEach(p -> {
             String userId = p.getUserId();
-            scoreMap.merge(userId, 3, Integer::sum);
+            scoreMap.merge(userId, p.getPlayedGameCount() * BASE_SCORE_PER_GAME, Integer::sum);
             playCountMap.put(userId, p.getTotalPlayCount());
             nicknameMap.put(userId, p.getNickname());
         });
@@ -68,11 +70,11 @@ public class LeaderboardService {
 
     private void addRankingPointsForGame(Map<String, Integer> scoreMap, GameType gameType) {
         if (!gameType.isLowBetter()) {
-            scoreRepository.findTop5WithRankByHighScore(gameType.name()).forEach(
+            scoreRepository.findTopNWithRankByHighScore(gameType.name(), TOP_RANK_LIMIT).forEach(
                     p -> scoreMap.merge(p.getUserId(), RankingPoint.getPointsByRank(p.getRank()), Integer::sum)
             );
         } else {
-            scoreRepository.findTop5WithRankByLowScore(gameType.name()).forEach(
+            scoreRepository.findTopNWithRankByLowScore(gameType.name(), TOP_RANK_LIMIT).forEach(
                     p -> scoreMap.merge(p.getUserId(), RankingPoint.getPointsByRank(p.getRank()), Integer::sum)
             );
         }
@@ -86,7 +88,7 @@ public class LeaderboardService {
         List<Map.Entry<String, Integer>> sorted =  scoreMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()
                         .thenComparing(it -> playCountMap.get(it.getKey()), Comparator.reverseOrder()))
-                .limit(5)
+                .limit(TOP_RANK_LIMIT)
                 .toList();
 
         List<LeaderboardResponse.LeaderboardRanking> result = new ArrayList<>();
