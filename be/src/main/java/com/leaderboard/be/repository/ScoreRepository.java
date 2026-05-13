@@ -23,8 +23,8 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
             "JOIN game g ON s.game_id = g.game_id " +
             "WHERE g.name = :gameType " +
             " ) " +
-            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
-    List<RankInterface> findTop5WithRankByHighScore(@Param("gameType") String gameType);
+            "SELECT * FROM ranked WHERE `rank` <= :topN ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankInterface> findTopNWithRankByHighScore(@Param("gameType") String gameType, @Param("topN") int topN);
 
     @Query(value = "WITH ranked AS ( " +
             "SELECT u.user_id, u.nickname, s.best_score as score, RANK() OVER (ORDER BY s.best_score ASC, s.play_count DESC) AS `rank` " +
@@ -33,6 +33,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
             "JOIN game g ON s.game_id = g.game_id " +
             "WHERE g.name = :gameType " +
             " ) " +
-            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
-    List<RankInterface> findTop5WithRankByLowScore(@Param("gameType") String gameType);
+            "SELECT * FROM ranked WHERE `rank` <= :topN ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankInterface> findTopNWithRankByLowScore(@Param("gameType") String gameType, @Param("topN") int topN);
 }
