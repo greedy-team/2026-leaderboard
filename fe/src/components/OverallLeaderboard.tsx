@@ -52,8 +52,7 @@ export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
                                     </div>
 
                                     <div className="overall-score score-neon">
-                                        {ranking.score}
-                                        {leaderboard.unit}
+                                        {ranking.score}점
                                     </div>
                                 </div>
                             );
