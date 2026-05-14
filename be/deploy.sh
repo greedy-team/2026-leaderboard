@@ -3,7 +3,9 @@
 log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$1] $2" | tee -a /home/ubuntu/app/deploy.log
 }
-
+log "INFO" "최신 코드 pull 시작"
+git -C /home/ubuntu/app pull origin develop
+log "INFO" "최신 코드 pull 완료"
 source deploy.env
 
 ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
