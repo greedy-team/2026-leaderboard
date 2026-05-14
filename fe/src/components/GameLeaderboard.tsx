@@ -18,7 +18,7 @@ export const GameLeaderboard: React.FC<GameLeaderboardProps> = ({
     return (
         <section className="h-full min-h-0 flex flex-col">
             <h2 className="retro-title text-[40px] leading-none mb-5">
-                MINI GAME RANKING
+                🎮 MINI GAME RANKING
             </h2>
 
             <div className="grid grid-cols-4 gap-8">

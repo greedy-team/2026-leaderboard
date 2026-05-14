@@ -20,7 +20,8 @@ export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
     return (
         <section className="h-full flex flex-col max-w-[1080px] mx-auto w-full">
             <h1 className="retro-title text-[60px] leading-none mb-4 flex items-center justify-center gap-4">
-                <span>{leaderboard.gameName}</span>
+                <span>🏆</span>
+                <span>TOTAL LEADERBOARD</span>
             </h1>
 
             <div className="retro-panel rounded-[10px] px-14 py-8 flex-1 min-h-[400px]">
@@ -52,8 +53,7 @@ export const OverallLeaderboard: React.FC<OverallLeaderboardProps> = ({
                                     </div>
 
                                     <div className="overall-score score-neon">
-                                        {ranking.score}
-                                        {leaderboard.unit}
+                                        {ranking.score}점
                                     </div>
                                 </div>
                             );

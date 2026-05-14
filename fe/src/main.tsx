@@ -44,11 +44,6 @@ const ScalingWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// 30초마다 페이지 새로고침 (실시간성 유지 보조)
-setInterval(() => {
-  window.location.reload();
-}, 30000);
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ScalingWrapper>
