@@ -25,20 +25,24 @@ export const LeaderboardPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (showLoading = false) => {
             try {
-                setLoading(true);
+                if (showLoading) {
+                    setLoading(true);
+                }
 
                 const overallRes = await axios.get<LeaderboardResponse>(
-                    `${apiURL}/leader-board/overall`
+                    `${apiURL}/leader-board/overall?t=${Date.now()}`
                 );
+
                 setOverall(overallRes.data);
 
                 const gameResults = await Promise.all(
                     gameConfigs.map(async ({ apiName }) => {
                         const res = await axios.get<LeaderboardResponse>(
-                            `${apiURL}/leader-board/${apiName}`
+                            `${apiURL}/leader-board/${apiName}?t=${Date.now()}`
                         );
+
                         return res.data;
                     })
                 );
@@ -49,11 +53,22 @@ export const LeaderboardPage: React.FC = () => {
                 setError("데이터를 불러오지 못했습니다.");
                 console.error("Error fetching data:", error);
             } finally {
-                setLoading(false);
+                if (showLoading) {
+                    setLoading(false);
+                }
             }
         };
 
-        fetchData();
+        // 최초 로딩 시 spinner 표시
+        fetchData(true);
+
+        // 30초마다 데이터만 갱신
+        const interval = setInterval(() => {
+            fetchData(false);
+        }, 10000);
+
+        // cleanup
+        return () => clearInterval(interval);
     }, []);
 
     if (loading) {

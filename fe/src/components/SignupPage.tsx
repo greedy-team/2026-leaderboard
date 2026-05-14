@@ -130,152 +130,70 @@ export const SignupPage: React.FC = () => {
         }
     };
 
-    const pageStyle: React.CSSProperties = {
-        minHeight: "100vh",
-        backgroundColor: "#030308",
-        color: "#ffffff",
-        padding: "32px 28px",
-        fontFamily: "sans-serif",
-    };
-
-    const containerStyle: React.CSSProperties = {
-        maxWidth: 420,
-    };
-
-    const titleStyle: React.CSSProperties = {
-        fontSize: 20,
-        fontWeight: 700,
-        marginBottom: 14,
-        color: "#ffffff",
-    };
-
-    const labelStyle: React.CSSProperties = {
-        display: "block",
-        fontSize: 18,
-        fontWeight: 700,
-        marginBottom: 8,
-        color: "#ffffff",
-    };
-
-    const inputStyle: React.CSSProperties = {
-        width: "100%",
-        height: 48,
-        padding: "0 12px",
-        boxSizing: "border-box",
-        border: "1px solid #ffffff",
-        borderRadius: 4,
-        backgroundColor: "#ffffff",
-        color: "#111111",
-        fontSize: 18,
-        fontWeight: 600,
-        outline: "none",
-    };
-
-    const disabledInputStyle: React.CSSProperties = {
-        ...inputStyle,
-        backgroundColor: "#555555",
-        color: "#ffffff",
-        border: "1px solid #555555",
-    };
-
-    const buttonStyle: React.CSSProperties = {
-        width: "100%",
-        padding: "14px 0",
-        marginTop: 24,
-        border: "none",
-        backgroundColor: "transparent",
-        color: "#ffffff",
-        fontSize: 18,
-        fontWeight: 700,
-        cursor: "pointer",
-    };
-
-    const messageStyle: React.CSSProperties = {
-        marginTop: 28,
-        color: "#ffffff",
-        fontSize: 18,
-        fontWeight: 700,
-        lineHeight: 1.5,
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-word",
-    };
-
     return (
-        <div style={pageStyle}>
-            <div style={containerStyle}>
-                <h1 style={titleStyle}>회원가입</h1>
+        <div className="signup-screen">
+            <div className="signup-panel">
+                <h1 className="signup-title">회원가입</h1>
+                <p className="signup-description">전화번호 뒷자리로 참가자를 확인합니다.</p>
 
                 {!isNewUser ? (
-                    <form onSubmit={handleCheckPhone}>
-                        <div>
-                            <label style={labelStyle}>전화번호 뒷 8자리</label>
+                    <form className="signup-form" onSubmit={handleCheckPhone}>
+                        <div className="signup-field">
+                            <label className="signup-label">전화번호 뒷 8자리</label>
                             <input
                                 value={phone}
                                 onChange={handlePhoneChange}
                                 placeholder="12345678"
                                 maxLength={8}
-                                style={inputStyle}
+                                className="signup-input"
                                 required
                             />
                         </div>
 
-                        <button type="submit" style={buttonStyle}>
+                        <button type="submit" className="signup-button">
                             확인
                         </button>
                     </form>
                 ) : (
-                    <form onSubmit={handleCreateUser}>
-                        <div style={{ marginBottom: 18 }}>
-                            <label style={labelStyle}>전화번호 뒷 8자리</label>
-                            <input value={phone} disabled style={disabledInputStyle} />
+                    <form className="signup-form" onSubmit={handleCreateUser}>
+                        <div className="signup-field">
+                            <label className="signup-label">전화번호 뒷 8자리</label>
+                            <input
+                                value={phone}
+                                disabled
+                                className="signup-input signup-input-disabled"
+                            />
                         </div>
 
-                        <div>
-                            <label style={labelStyle}>닉네임</label>
+                        <div className="signup-field">
+                            <label className="signup-label">닉네임</label>
                             <input
                                 value={nickname}
                                 onChange={(e) => setNickname(e.target.value)}
                                 placeholder="닉네임"
-                                style={inputStyle}
+                                className="signup-input"
                                 required
                             />
                         </div>
 
-                        <button type="submit" style={buttonStyle}>
+                        <button type="submit" className="signup-button">
                             회원가입
                         </button>
                     </form>
                 )}
 
-                {message && <p style={messageStyle}>{message}</p>}
+                {message && <p className="signup-message">{message}</p>}
 
                 {userId && (
-                    <div style={{ marginTop: 24 }}>
-                        <div style={{ marginBottom: 16 }}>
-                            <p style={{ ...labelStyle, marginBottom: 8 }}>닉네임</p>
-                            <p
-                                style={{
-                                    fontSize: 24,
-                                    fontWeight: 700,
-                                    color: "#ffffff",
-                                }}
-                            >
-                                {displayNickname}
-                            </p>
+                    <div className="signup-result">
+                        <div className="signup-result-group">
+                            <p className="signup-label">닉네임</p>
+                            <p className="signup-result-name">{displayNickname}</p>
                         </div>
 
                         <div>
-                            <p style={{ ...labelStyle, marginBottom: 8 }}>아이디</p>
-                            <p
-                                style={{
-                                    fontSize: 32,
-                                    fontWeight: 700,
-                                    color: "#ffffff",
-                                    letterSpacing: 4,
-                                }}
-                            >
-                                {userId}
-                            </p>
+                            <p className="signup-label">아이디</p>
+                            <p className="signup-result-id">{userId}</p>
                         </div>
                     </div>
                 )}
