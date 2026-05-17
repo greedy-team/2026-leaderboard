@@ -363,9 +363,9 @@ body {
 /* 하단 미니게임 순위 */
 .game-row {
     display: grid;
-    grid-template-columns: 50px minmax(0, 1fr) 140px;
+    grid-template-columns: 27px minmax(0, 1fr) max-content;
     align-items: center;
-    column-gap: 8px;
+    column-gap: 4px;
     border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
     min-height: 52px;
 }
@@ -446,7 +446,7 @@ body {
 .game-size-1 .game-rank,
 .game-size-1 .game-name,
 .game-size-1 .game-score {
-    font-size: 33px;
+    font-size: 31px;
 }
 
 .game-size-2 .game-rank,
@@ -458,7 +458,7 @@ body {
 .game-size-3 .game-rank,
 .game-size-3 .game-name,
 .game-size-3 .game-score {
-    font-size: 23px;
+    font-size: 24px;
 }
 
 .game-size-4 .game-rank,
@@ -467,7 +467,7 @@ body {
 .game-size-5 .game-rank,
 .game-size-5 .game-name,
 .game-size-5 .game-score {
-    font-size: 21px;
+    font-size: 22px;
 }
 
 .game-size-1,
