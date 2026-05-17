@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Tag(name = "User", description = "유저 관련 API")
 public interface UserControllerDocs {
 
-    @Operation(summary = "유저 생성", description = "닉네임과 전화번호로 신규 유저를 등록합니다. 이미 등록된 전화번호면 기존 유저 정보를 반환합니다.")
+    @Operation(summary = "유저 생성", description = "닉네임과 전화번호로 신규 유저를 등록합니다. 이미 등록된 전화번호면 기존 유저 정보를 반환합니다.\n\n닉네임은 8자 이하여야 합니다.")
     ResponseEntity<UserProfileResponse> createUser(UserProfileRequest request);
 
     @Operation(summary = "유저 조회 (ID)", description = "userId로 유저 정보를 조회합니다.")
