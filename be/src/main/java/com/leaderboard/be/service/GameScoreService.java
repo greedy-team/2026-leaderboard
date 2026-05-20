@@ -27,7 +27,7 @@ public class GameScoreService {
 
     public ScoreSubmitResponse processGameResult(ScoreSubmitRequest request) {
         // 1. 유저와 게임 존재 여부 확인
-        User user = userRepository.findById(request.userId())
+        User user = userRepository.findById(request.userId().toUpperCase())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 ID입니다: " + request.userId()));
 
         // 게임 찾기
@@ -78,7 +78,7 @@ public class GameScoreService {
         Game game = gameRepository.findByGameType(gameType)
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
 
-        Score score = scoreRepository.findByUser_UserIdAndGame_GameId(request.userId(), game.getGameId())
+        Score score = scoreRepository.findByUser_UserIdAndGame_GameId(request.userId().toUpperCase(), game.getGameId())
                 .orElseThrow(() -> new IllegalStateException("해당 유저의 게임 기록이 존재하지 않아 수정할 수 없습니다."));
 
         double previousScore = score.getBestScore();

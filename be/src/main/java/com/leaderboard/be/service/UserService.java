@@ -39,7 +39,7 @@ public class UserService {
     }
 
     public UserInfoResponse getUserById(String userId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.findById(userId.toUpperCase())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
         return new UserInfoResponse(user.getUserId(), user.getNickname(), user.getPhone());
     }
