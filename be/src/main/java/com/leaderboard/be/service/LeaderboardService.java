@@ -87,7 +87,7 @@ public class LeaderboardService {
     ) {
         List<Map.Entry<String, Integer>> sorted =  scoreMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()
-                        .thenComparing(it -> playCountMap.get(it.getKey()), Comparator.reverseOrder()))
+                        .thenComparing(it -> playCountMap.getOrDefault(it.getKey(), 0), Comparator.reverseOrder()))
                 .limit(TOP_RANK_LIMIT)
                 .toList();
 
