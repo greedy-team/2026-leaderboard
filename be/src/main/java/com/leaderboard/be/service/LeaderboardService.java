@@ -6,6 +6,7 @@ import com.leaderboard.be.entity.GameType;
 import com.leaderboard.be.repository.PlayCountInterface;
 import com.leaderboard.be.repository.RankInterface;
 import com.leaderboard.be.repository.ScoreRepository;
+import com.leaderboard.be.service.RankingPoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -87,7 +88,7 @@ public class LeaderboardService {
     ) {
         List<Map.Entry<String, Integer>> sorted =  scoreMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()
-                        .thenComparing(it -> playCountMap.get(it.getKey()), Comparator.reverseOrder()))
+                        .thenComparing(it -> playCountMap.getOrDefault(it.getKey(), 0), Comparator.reverseOrder()))
                 .limit(TOP_RANK_LIMIT)
                 .toList();
 
