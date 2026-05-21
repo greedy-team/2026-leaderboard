@@ -31,7 +31,7 @@ public class UserService {
             throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
         }
 
-        String userId = generateUserId();
+        String userId = generateUserId(request.phone());
         User user = new User(userId, request.nickname(), request.phone());
         userRepository.save(user);
 
@@ -54,7 +54,16 @@ public class UserService {
         return new UserProfileResponse(user.getUserId(), user.getNickname(), user.getPhone());
     }
 
-    private String generateUserId() {
+    private String generateUserId(String phone) {
+        // 1) 전화번호 뒷 4자리로 먼저 시도
+        if (phone != null && phone.length() >= 4) {
+            String phoneId = phone.substring(phone.length() - 4);
+            if (!userRepository.existsById(phoneId)) {
+                return phoneId;
+            }
+        }
+
+        // 2) 중복이면 랜덤 4자리
         String chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // O, 0, I, 1, L 제외
         Random random = new Random();
         String userId;
