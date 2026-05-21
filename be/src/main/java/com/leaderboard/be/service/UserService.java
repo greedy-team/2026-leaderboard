@@ -55,7 +55,7 @@ public class UserService {
     }
 
     private String generateUserId() {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // O, 0, I, 1, L 제외
         Random random = new Random();
         String userId;
         do {
